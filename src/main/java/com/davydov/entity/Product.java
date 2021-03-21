@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -14,7 +17,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQueries({
   @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product AS p WHERE p.id = :id"),
   @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product AS p")
-)
+})
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +27,10 @@ public class Product {
   private String title;
   @Column(name = "price")
   private int price;
+
+  @JsonIgnore
+  @ManyToMany(mappedBy = "products")
+  private List<Customer> customers;
 
   public Product() {
 
@@ -58,6 +65,14 @@ public class Product {
     this.price = price;
   }
 
+  public List<Customer> getCustomers() {
+    return customers;
+  }
+
+  public void setCustomers(List<Customer> customers) {
+    this.customers = customers;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -75,7 +90,10 @@ public class Product {
     if (!id.equals(product.id)) {
       return false;
     }
-    return title != null ? title.equals(product.title) : product.title == null;
+    if (title != null ? !title.equals(product.title) : product.title != null) {
+      return false;
+    }
+    return customers != null ? customers.equals(product.customers) : product.customers == null;
   }
 
   @Override
@@ -83,6 +101,7 @@ public class Product {
     int result = id.hashCode();
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + price;
+    result = 31 * result + (customers != null ? customers.hashCode() : 0);
     return result;
   }
 
@@ -92,6 +111,7 @@ public class Product {
       "id=" + id +
       ", title='" + title + '\'' +
       ", price=" + price +
+      ", customers=" + customers +
       '}';
   }
 }
