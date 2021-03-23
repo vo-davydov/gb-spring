@@ -5,19 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 
 @Entity
 @Table(name = "product")
-@NamedQueries({
-  @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product AS p WHERE p.id = :id"),
-  @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product AS p")
-})
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,19 +17,10 @@ public class Product {
   @Column(name = "title", length = 128)
   private String title;
   @Column(name = "price")
-  private int price;
-
-  @JsonIgnore
-  @ManyToMany(mappedBy = "products")
-  private List<Customer> customers;
+  private Double price;
 
   public Product() {
 
-  }
-
-  public Product(String title, int price) {
-    this.title = title;
-    this.price = price;
   }
 
   public Long getId() {
@@ -57,20 +39,12 @@ public class Product {
     this.title = title;
   }
 
-  public int getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(int price) {
+  public void setPrice(Double price) {
     this.price = price;
-  }
-
-  public List<Customer> getCustomers() {
-    return customers;
-  }
-
-  public void setCustomers(List<Customer> customers) {
-    this.customers = customers;
   }
 
   @Override
@@ -84,24 +58,20 @@ public class Product {
 
     Product product = (Product) o;
 
-    if (price != product.price) {
-      return false;
-    }
     if (!id.equals(product.id)) {
       return false;
     }
     if (title != null ? !title.equals(product.title) : product.title != null) {
       return false;
     }
-    return customers != null ? customers.equals(product.customers) : product.customers == null;
+    return price != null ? price.equals(product.price) : product.price == null;
   }
 
   @Override
   public int hashCode() {
     int result = id.hashCode();
     result = 31 * result + (title != null ? title.hashCode() : 0);
-    result = 31 * result + price;
-    result = 31 * result + (customers != null ? customers.hashCode() : 0);
+    result = 31 * result + (price != null ? price.hashCode() : 0);
     return result;
   }
 
@@ -111,7 +81,6 @@ public class Product {
       "id=" + id +
       ", title='" + title + '\'' +
       ", price=" + price +
-      ", customers=" + customers +
       '}';
   }
 }

@@ -1,55 +1,55 @@
 package com.davydov.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import com.davydov.dao.CustomerDao;
-import com.davydov.dao.ProductDao;
-import com.davydov.dto.CustomerDto;
-import com.davydov.entity.Customer;
+import com.davydov.dto.ProductDto;
 import com.davydov.entity.Product;
+import com.davydov.repository.ProductRepository;
+import com.davydov.util.PageableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ShopService {
 
-  private CustomerDao customerDao;
-  private ProductDao productDao;
+  private ProductRepository productRepository;
 
   @Autowired
-  public ShopService(CustomerDao customerDao, ProductDao productDao) {
-    this.customerDao = customerDao;
-    this.productDao = productDao;
+  public ShopService(ProductRepository productRepository) {
+    this.productRepository = productRepository;
   }
 
   public Optional<Product> getProduct(Long id) {
-    return productDao.findById(id);
+    return productRepository.findById(id);
   }
 
-  public Optional<Customer> addCustomer(CustomerDto customerDto) {
-    Customer customer = new Customer();
-    customer.setName(customerDto.getName());
-    List<Product> products = new ArrayList<>();
-    for (Long p : customerDto.getProducts()) {
-      Product product = productDao.findById(p).get();
-      products.add(product);
+  public Optional<Product> addProduct(ProductDto productDto) {
+    Product product = new Product();
+    product.setPrice(productDto.getPrice());
+    product.setTitle(productDto.getTitle());
+    return Optional.of(productRepository.save(product));
+  }
+
+  public Boolean deleteProduct(Long id) {
+    try {
+      productRepository.deleteById(id);
+      return true;
+    } catch (Exception e) {
+      return false;
     }
-    customer.setProducts(products);
-    return customerDao.saveOrUpdate(customer);
   }
 
-  public Optional<List<Customer>> getProductCustomers(Long id) {
-    return productDao.findAllCustomers(id);
+  public Page<Product> getAllProduct(PageableUtil filter) {
+    if (filter != null) {
+      if ("ASC".equals(filter.getOrderBy().toUpperCase())) {
+        return productRepository.findAll(PageRequest.of(filter.getPage(), filter.getSize(), Sort.by(filter.getSortBy()).ascending()));
+      } else {
+        return productRepository.findAll(PageRequest.of(filter.getPage(), filter.getSize(), Sort.by(filter.getSortBy()).descending()));
+      }
+    }
+    return Page.empty();
   }
 
-  public Optional<List<Product>> getCustomerProducts(Long id) {
-    return customerDao.getProducts(id);
-  }
-
-  public boolean addProduct(Long idCustomer, Long idProduct) {
-
-    return customerDao.addProduct(idCustomer, idProduct);
-  }
 }
