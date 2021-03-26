@@ -7,5 +7,3 @@ spring:
     show-sql: true
   liquibase:
     change-log: classpath:db/master.xml
-  thymeleaf:
-    encoding: UTF-8
