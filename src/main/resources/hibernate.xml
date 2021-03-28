@@ -14,5 +14,6 @@
         <property name="hbm2ddl.auto">none</property>
 
         <mapping class="com.davydov.entity.Product"/>
+        <mapping class="com.davydov.entity.Customer"/>
     </session-factory>
 </hibernate-configuration>

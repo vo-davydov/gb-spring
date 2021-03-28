@@ -1,15 +1,19 @@
 package com.davydov.dao;
 
 import java.util.List;
+import java.util.Optional;
+import com.davydov.entity.Customer;
 import com.davydov.entity.Product;
 
 public interface ProductDao {
 
-  Product findById(Long id);
+  Optional<Product> findById(Long id);
 
-  List<Product> findAll();
+  Optional<List<Product>> findAll();
 
   void deleteById(Long id);
 
-  Product saveOrUpdate(Product product);
+  Optional<Product> saveOrUpdate(Product product);
+
+  Optional<List<Customer>> findAllCustomers(Long id);
 }
