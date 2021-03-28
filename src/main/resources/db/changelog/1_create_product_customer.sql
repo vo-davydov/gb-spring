@@ -1,17 +1,17 @@
-CREATE TABLE product
+CREATE TABLE IF NOT EXISTS product
 (
     id    SERIAL PRIMARY KEY,
     title VARCHAR(128),
-    price INT
+    price NUMERIC
 );
 
-CREATE TABLE customer
+CREATE TABLE IF NOT EXISTS customer
 (
     id   SERIAL PRIMARY KEY,
     name varchar(128)
 );
 
-CREATE TABLE customer_product
+CREATE TABLE IF NOT EXISTS customer_product
 (
     customer_id INT NOT NULL,
     product_id  INT NOT NULL,

@@ -1,19 +1,16 @@
 package com.davydov.dto;
 
 public class ProductDto {
-  private Long id;
   private String title;
-  private int price;
+  private Double price;
 
   public ProductDto() {
+
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
+  public ProductDto(String title, Double price) {
+    this.title = title;
+    this.price = price;
   }
 
   public String getTitle() {
@@ -24,11 +21,11 @@ public class ProductDto {
     this.title = title;
   }
 
-  public int getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(int price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 }
