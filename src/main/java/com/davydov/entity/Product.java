@@ -23,6 +23,11 @@ public class Product {
 
   }
 
+  public Product(String title, Double price) {
+    this.title = title;
+    this.price = price;
+  }
+
   public Long getId() {
     return id;
   }
