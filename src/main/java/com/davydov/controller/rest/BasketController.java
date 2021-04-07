@@ -1,4 +1,4 @@
-package com.davydov.controller;
+package com.davydov.controller.rest;
 
 import java.util.HashMap;
 import java.util.List;
