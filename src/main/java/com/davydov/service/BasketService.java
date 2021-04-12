@@ -25,12 +25,8 @@ public class BasketService {
   public Optional<HashMap<Long, List<Product>>> getBaskets() {
     Optional<List<Customer>> optionalCustomer = customerService.getCustomers();
     HashMap<Long, List<Product>> basketResult = new HashMap<>();
-    if (optionalCustomer.isPresent()) {
-      optionalCustomer.get().forEach(c -> basketResult.put(c.getId(), c.getProducts()));
-      return Optional.of(basketResult);
-    }
-
-    return Optional.empty();
+    optionalCustomer.get().forEach(c -> basketResult.put(c.getId(), c.getProducts()));
+    return Optional.of(basketResult);
   }
 
   public Optional<List<ProductDto>> getBasket(Long id) {

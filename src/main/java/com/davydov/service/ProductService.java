@@ -27,9 +27,9 @@ public class ProductService {
     productRepository.deleteById(id);
   }
 
-  public Optional<Product> updateProduct(ProductDto productDto) throws Exception {
+  public Optional<Product> updateProduct(ProductDto productDto) {
     if (productDto == null) {
-      throw new Exception("Product cannot be null");
+      throw new RuntimeException("Product cannot be null");
     }
     if (productDto.getId() != null) {
       Product product = productRepository.findById(productDto.getId()).get();
