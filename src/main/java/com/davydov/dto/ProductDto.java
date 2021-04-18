@@ -1,12 +1,20 @@
 package com.davydov.dto;
 
+import java.util.List;
+
 public class ProductDto {
   private Long id;
   private String title;
   private Double price;
+  private List<Long> idCustomers;
 
   public ProductDto() {
 
+  }
+
+  public ProductDto(String title, Double price) {
+    this.title = title;
+    this.price = price;
   }
 
   public ProductDto(Long id, String title, Double price) {

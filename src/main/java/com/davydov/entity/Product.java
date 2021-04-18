@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -18,6 +20,9 @@ public class Product {
   private String title;
   @Column(name = "price")
   private Double price;
+
+  @ManyToMany(mappedBy = "products")
+  private List<Customer> customers;
 
   public Product() {
 
