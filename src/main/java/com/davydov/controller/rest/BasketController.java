@@ -32,14 +32,14 @@ public class BasketController {
   @GetMapping
   public ResponseEntity<HashMap<Long, List<Product>>> getBaskets() {
     Optional<HashMap<Long, List<Product>>> optionalBasket = basketService.getBaskets();
-    return optionalBasket.map(basket -> new ResponseEntity<>(basket, HttpStatus.FOUND))
+    return optionalBasket.map(basket -> new ResponseEntity<>(basket, HttpStatus.OK))
       .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping("{id}")
   public ResponseEntity<List<ProductDto>> getBasket(@PathVariable Long id) {
     if (basketService.getBasket(id).isPresent()) {
-      return new ResponseEntity<>(basketService.getBasket(id).get(), HttpStatus.FOUND);
+      return new ResponseEntity<>(basketService.getBasket(id).get(), HttpStatus.OK);
     }
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }

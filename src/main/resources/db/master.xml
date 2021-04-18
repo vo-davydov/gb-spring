@@ -8,4 +8,12 @@
              relativeToChangelogFile="false"/>
     <include file="classpath:db/changelog/2_insert_products.sql"
              relativeToChangelogFile="false"/>
+    <include file="classpath:db/changelog/3_create_user_and_role_table.sql"
+             relativeToChangelogFile="false"/>
+    <include file="classpath:db/changelog/4_insert_user.sql"
+             relativeToChangelogFile="false"/>
+    <include file="classpath:db/changelog/5_add_customer.sql"
+             relativeToChangelogFile="false"/>
+    <include file="classpath:db/changelog/6_add_link_to_customer.sql"
+             relativeToChangelogFile="false"/>
 </databaseChangeLog>

@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -30,7 +30,19 @@ public class User {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Role> role;
 
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "customer_id", referencedColumnName = "id")
+  private Customer customer;
+
   public User() {
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
   public Long getId() {
